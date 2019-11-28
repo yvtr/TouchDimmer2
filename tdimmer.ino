@@ -62,15 +62,15 @@ void loop() {
       static uint8_t KeyA = 0xFF;
       uint8_t a = digitalRead(KeyA_pin);
       if (a != KeyA) {
-         if (a) DimmerSM_EventProc(EV_DSM_SW1_PRESS);
-         else   DimmerSM_EventProc(EV_DSM_SW1_REL);
+         if (a) DimmerSM_EventProc(EV_DSM_SW1_REL);
+         else   DimmerSM_EventProc(EV_DSM_SW1_PRESS);
          KeyA = a;
       }
       static uint8_t KeyB = 0xFF;
       uint8_t b = digitalRead(KeyB_pin);
       if (b != KeyB) {
-         if (b) DimmerSM_EventProc(EV_DSM_SW2_PRESS);
-         else   DimmerSM_EventProc(EV_DSM_SW2_REL);
+         if (b) DimmerSM_EventProc(EV_DSM_SW2_REL);
+         else   DimmerSM_EventProc(EV_DSM_SW2_PRESS);
          KeyB = b;
       }
       DimmerSM_EventProc(EV_TIMER_TICK);
