@@ -26,9 +26,9 @@ static DIMMER_SM DSM;
 #define LedExtra_pin    2
 
 
-const uint16_t TholdDim = 1500;     // [ms]
-const uint16_t ToutExtra = 5000;    // [ms]
-const uint16_t ToutLongSw = 1500;   // [ms]
+const uint16_t TholdDim = 1500 / 10;     // [10ms]
+const uint16_t ToutExtra = 5000 / 10;    // [10ms]
+const uint16_t ToutLongSw = 1500 / 10;   // [10ms]
 
 // Local function declarations =================================================
 static void DimmerSt_LedOff(DIMMER_SM* me, uint16_t event);
@@ -143,7 +143,7 @@ void DimmerSt_StartDim(DIMMER_SM* const me, uint16_t event) {
       }break;
       case EV_DSM_TICK_10MS: {
          if (++me->Timer > TholdDim) {                   //u StartDim -up-> Delay1 : t>TholdDim
-            SM_SET_STATE_DELAYED(&DimmerSt_Dimmed, 100); //u Delay1 -> Dimmed
+            SM_SET_STATE_DELAYED(&DimmerSt_Dimmed, 200/10); //u Delay1 -> Dimmed
             Led_SetPwm(255);                             //u Delay1: LED PWM: 0%
          }
       }break;
