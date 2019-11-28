@@ -1,0 +1,51 @@
+@startuml
+skinparam defaultTextAlignment left
+state DimmerSM {
+[*] -left-> LedOff
+state LedOff {
+LedOff: entry:
+LedOff: LED PWM: 0%
+LedOff -left-> StartDim : push SW1\nor SW2
+}
+state Delay1
+state StartDim {
+StartDim: entry:
+StartDim: t start
+StartDim: LED PWM: 50%
+StartDim --> NormalStart : release\nSW1 or SW2
+StartDim -up-> Delay1 : t>TholdDim
+Delay1 -> Dimmed
+Delay1: LED PWM: 0%
+}
+state Dimmed {
+Dimmed: entry:
+Dimmed: LED PWM: 50%
+Dimmed --> LedOff : push SW1\nor SW2
+}
+state NormalStart {
+NormalStart: entry:
+NormalStart: t start
+NormalStart: LED PWM: 100%
+NormalStart -up-> LedOff : push\nSW1
+NormalStart --> ExtraBright : push\nSW2
+NormalStart -> NormalBright : t>ToutExtra
+}
+state NormalBright {
+NormalBright: entry:
+NormalBright: t stop
+NormalBright:
+NormalBright -up-> LedOff : push\nSW1
+NormalBright: push SW2: t start
+NormalBright -up-> LedOff : release\nSW2
+NormalBright --> ExtraBright : t>ToutLongSw
+}
+state ExtraBright {
+ExtraBright: entry:
+ExtraBright: extra LED on
+ExtraBright:
+ExtraBright: exit:
+ExtraBright: extra LED on
+ExtraBright -up-> LedOff : push SW1\nor SW2
+}
+}
+@enduml
