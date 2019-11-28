@@ -132,7 +132,7 @@ void DimmerSt_StartDim(DIMMER_SM* const me, uint16_t event) {
    switch (event) {
       case EV_STATE_ENTER: {  //u StartDim: entry:
          me->Timer = 0;       //u StartDim: t start
-         Led_SetPwm(128);     //u StartDim: LED PWM: 50%
+         Led_SetPwm(64);      //u StartDim: LED PWM: 25%
       }break;
       case EV_STATE_EXIT: {
       }break;
@@ -144,7 +144,7 @@ void DimmerSt_StartDim(DIMMER_SM* const me, uint16_t event) {
       case EV_DSM_TICK_10MS: {
          if (++me->Timer > TholdDim) {                   //u StartDim -up-> Delay1 : t>TholdDim
             SM_SET_STATE_DELAYED(&DimmerSt_Dimmed, 200/10); //u Delay1 -> Dimmed
-            Led_SetPwm(255);                             //u Delay1: LED PWM: 0%
+            Led_SetPwm(0);                               //u Delay1: LED PWM: 0%
          }
       }break;
    }
