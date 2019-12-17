@@ -53,8 +53,8 @@ Tmr Tmr1s    = { .Period = 1000 };
 * @brief Arduino init
 *******************************************************************************/
 void setup() {
-   pinMode(KeyA_pin, INPUT_PULLUP);
-   pinMode(KeyB_pin, INPUT_PULLUP);
+   pinMode(KeyA_pin, INPUT);
+   pinMode(KeyB_pin, INPUT);
 
    DimmerSM_Init();
 }
