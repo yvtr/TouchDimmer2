@@ -22,8 +22,17 @@ typedef void DIMMER_STATE_FUNC (DIMMER_SM* me, uint16_t event);
 static DIMMER_SM DSM;
 #define DEFINE_MY_OBJECT()    DIMMER_SM* const me = &DSM;
 
-#define LedPwm_pin      1
-#define LedExtra_pin    2
+
+#if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
+   #define LedPwm_pin      1
+   #define LedExtra_pin    2
+#elif defined(__AVR_ATtiny2313__) || defined(__AVR_ATtiny2313A__)
+   #define LedPwm_pin      12
+   #define LedExtra_pin    11
+#else
+   #error Unknown CPU: provide code for your CPU
+#endif
+
 #define  LED_PWM_DIMMED    64
 
 
@@ -62,7 +71,6 @@ void DimmerSM_Init() {
    #elif defined(__AVR_ATtiny2313__) || defined(__AVR_ATtiny2313A__)
    TCCR1A = 3<<COM1A0 | 1<<WGM10;   // Timer1: fast PWM 8bit, clr at top
    TCCR1B = 1<<WGM12 | 1<<CS10;     // Timer1 start, presc:/1
-
    #else
    #error Unknown CPU: provide code for Timer1 PWM setting
    #endif
