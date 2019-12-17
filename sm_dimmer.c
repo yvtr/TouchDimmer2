@@ -24,6 +24,7 @@ static DIMMER_SM DSM;
 
 #define LedPwm_pin      1
 #define LedExtra_pin    2
+#define  LED_PWM_DIMMED    64
 
 
 const uint16_t TholdDim = 1500 / 10;     // [10ms]
@@ -132,7 +133,7 @@ void DimmerSt_StartDim(DIMMER_SM* const me, uint16_t event) {
    switch (event) {
       case EV_STATE_ENTER: {  //u StartDim: entry:
          me->Timer = 0;       //u StartDim: t start
-         Led_SetPwm(64);      //u StartDim: LED PWM: 25%
+         Led_SetPwm(LED_PWM_DIMMED); //u StartDim: LED PWM: dimmed
       }break;
       case EV_STATE_EXIT: {
       }break;
@@ -158,7 +159,7 @@ void DimmerSt_StartDim(DIMMER_SM* const me, uint16_t event) {
 void DimmerSt_Dimmed(DIMMER_SM* const me, uint16_t event) {
    switch (event) {
       case EV_STATE_ENTER: {  //u Dimmed: entry:
-         Led_SetPwm(128);     //u Dimmed: LED PWM: 50%
+         Led_SetPwm(LED_PWM_DIMMED); //u Dimmed: LED PWM: dimmed
       }break;
       case EV_STATE_EXIT: {
       }break;
