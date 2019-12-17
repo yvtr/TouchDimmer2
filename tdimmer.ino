@@ -5,8 +5,15 @@
 #include "sm_dimmer.h"
 
 
-#define KeyA_pin   3
-#define KeyB_pin   4
+#if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
+   #define KeyA_pin   3
+   #define KeyB_pin   4
+#elif defined(__AVR_ATtiny2313__) || defined(__AVR_ATtiny2313A__)
+   #define KeyA_pin   8
+   #define KeyB_pin   9
+#else
+   #error Unknown CPU: provide code for your CPU
+#endif
 
 
 
