@@ -57,7 +57,15 @@ void DimmerSM_Init() {
    DEFINE_MY_OBJECT();
 
    Led_SetPwm(0);                            // LED switch off
+   #if defined(__AVR_ATtiny25__) || defined(__AVR_ATtiny45__) || defined(__AVR_ATtiny85__)
    TCCR1 = 1<<PWM1A | 3<<COM1A0 | 1<<CS10;   // Timer1: PWM mode
+   #elif defined(__AVR_ATtiny2313__) || defined(__AVR_ATtiny2313A__)
+   TCCR1A = 3<<COM1A0 | 1<<WGM10;   // Timer1: fast PWM 8bit, clr at top
+   TCCR1B = 1<<WGM12 | 1<<CS10;     // Timer1 start, presc:/1
+
+   #else
+   #error Unknown CPU: provide code for Timer1 PWM setting
+   #endif
    pinMode(LedPwm_pin, OUTPUT);
    pinMode(LedExtra_pin, OUTPUT);
 
